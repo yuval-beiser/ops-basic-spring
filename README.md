@@ -53,7 +53,7 @@ install git
 ```
 sudo yum update
 sudo yum install git
-git clone git@github.com:hoolinova/ops-basic-spring.git 
+git clone git@github.com:yuval-beiser/ops-basic-spring.git 
 ```
 ### BASIC Linux commands
 ```
@@ -342,10 +342,12 @@ getHighSatStudents -> getHighSatStudents1
 check that swagger updates
 
 ### S3 deploy
-create bucket niv.backend.students <br>
+create bucket yuval.backend.students <br>
 public false<br>
 in properties make static web hosting true<br>
-add this to permissions:
+add index.html
+add this to permissions > bucket permissions
+(arn:aws:s3:::yuval.backend.students/* from copy ARM)
 ```
 {
     "Version": "2012-10-17",
@@ -355,24 +357,31 @@ add this to permissions:
             "Effect": "Allow",
             "Principal": "*",
             "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::niv.backend.students/*"
+            "Resource": "arn:aws:s3:::yuval.backend.students/*"
         }
     ]
 }
+
 ```
 
 
 in AIM create a user for the deploy with admin privileges <br>
+name - s3
+Attach policies directly 
+
+In security credentials add access key and save it 
+option - command line interface
 create and save the access key
-fork the repository: https://github.com/handson-academy/ops-basic-angular
+
+fork the repository: https://github.com/yuval-beiser/ops-basic-angular
 fill the secrets:
 ```
-AWS_ACCESS_KEY_ID: 
-AWS_SECRET_ACCESS_KEY:
-AWS_REGION: <YOUR_AWS_REGION>
-S3_BUCKET_NAME: <YOUR_S3_BUCKET_NAME>
+AWS_ACCESS_KEY_ID: AKIAR6ZVZKUS75YYHNKE
+AWS_SECRET_ACCESS_KEY: QYbjmA14GoHBPJw4oBo93dtsWf19DCvfi8+JfSkg
+AWS_REGION: eu-central-1
+S3_BUCKET_NAME: yuval.backend.students
 ```
-change backend url to: 'http://13.50.235.108:8080/api'
+change backend url to: 'http://18.195.65.39:8080/api'
 in ops-basic-angular/src/environments/environment.ts  
 and ops-basic-angular/src/environments/environment-prod.ts 
 
@@ -412,6 +421,11 @@ jobs:
           aws s3 sync ./dist/webapp s3://${{ env.S3_BUCKET_NAME }} --delete
 ```
 
+aws -> s3 -> bucket yuval.backend.students -> properties -> press link in "Static website hosting"
+"http://yuval.backend.students.s3-website.eu-central-1.amazonaws.com/#/login"
+
+username & password - string
+
 ### DOMAIN
 1. buy a domain on https://start.godaddy.com/ <br>
 
@@ -430,13 +444,15 @@ ns19.domaincontrol.com <br>
 ns20.domaincontrol.com <br>
 <br>
 to: <br>
-ns-1255.awsdns-28.org <br>
-ns-579.awsdns-08.net  <br>
-ns-438.awsdns-54.com  <br>
-ns-1717.awsdns-22.co.uk <br>
+ns-1199.awsdns-21.org
+ns-1005.awsdns-61.net
+ns-217.awsdns-27.com
+ns-1868.awsdns-41.co.uk
 
-### Domain for ec2
-create A record -> [ec2 ip] -> ec2-raw.nivitzhaky.com
+### Domain for ec2 
+ITS NOT IN THE VIDEO
+create A record -> [ec2 ip - 18.195.65.39] -> ec2-raw.hoolinova.com
+ec2-raw.hoolinova.com
 
 
 ### Cloudfront
@@ -446,20 +462,21 @@ XXXX create
 in the project change the url in 
 environment.prod.ts and 
 environment.ts <br>
-to: 'https://ec2-stage.nivitzhaky.com/api'
+to: 'https://ec2-stage.hoolinova.com/api'
 
 create distribution<br>
 origin1-> select s3 bucket -> use website endpoint -> caching disabled <br>
-alternate domain: ec2-stage.nivitzhaky.com -> custom ssl : request certificate<br>
-fully qualified name:  nivitzhaky.com , *.nivitzhaky.com <br>
+alternate domain: ec2-stage.hoolinova.com -> custom ssl : request certificate<br>
+fully qualified name:  hoolinova.com , *.hoolinova.com <br>
+press certificate -> Create DNS records in Amazon Route 53
 validate with dns <br>
-cname (give name) ec2-stage.nivitzhaky.com and copy cloudfront distribution url<br>
+cname (give name) ec2-stage.hoolinova.com and copy cloudfront distribution url<br>
 hosted zones-> domain -> create record ->
 <br><br>
 origin2->
-http only -> 8080-> origin = ec2-raw.nivitzhaky.com => choose all allowed http methods<br>
-alternate domain name-> ec2-stage.nivitzhaky.com<br>
-Custom SSL certificate - optional -> nivitzhaky.com<br>
+http only -> 8080-> origin = ec2-raw.hoolinova.com => choose all allowed http methods<br>
+alternate domain name-> ec2-stage.hoolinova.com<br>
+Custom SSL certificate - optional -> hoolinova.com<br>
 <br>
 behaviours: <br>
 api/* -> allowed methods all -> caching all <br>
@@ -497,12 +514,14 @@ GRANT all PRIVILEGES on students_stage_eks.* to 'students_staging_eks'@'%';
 ### AIM
 go to AIM and create a user with programatic access and console sign in (admin credentials)
 ```
-accountid = 
-access_key=
-secret_key=
+accountid = 134867408165
+access_key=AKIAR6ZVZKUSZETYV5PL
+secret_key=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
 username=academy
 password=Unix11!@
 ```
+
+
 
 
 ### GITLAB 
