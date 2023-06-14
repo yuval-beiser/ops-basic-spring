@@ -536,9 +536,9 @@ on gitlab, backend service. <br>
 goto: settings -> ci/cd <br>
 expand variables, update: (unprotect the vars)
 ```
-AWS_ACCESS_KEY_ID=
-AWS_DEFAULT_REGION=eu-north-1
-AWS_SECRET_ACCESS_KEY=
+AWS_ACCESS_KEY_ID=AKIAR6ZVZKUSZETYV5PL
+AWS_DEFAULT_REGION=eu-central-1
+AWS_SECRET_ACCESS_KEY=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
 CI_AWS_ECS_CLUSTER=ecs-stage-cluster
 CI_AWS_ECS_SERVICE=ecs-stage-service
 ```
@@ -546,10 +546,10 @@ CI_AWS_ECS_SERVICE=ecs-stage-service
 
 ### Parameter store
 ```
-students_staging_ecs=jdbc:mysql://database-2.cmyyngkp9f7o.eu-north-1.rds.amazonaws.com:3306/students_stage_ecs
+students_staging_ecs=jdbc:mysql://students.cyorux28d2cj.eu-central-1.rds.amazonaws.com:3306/students_stage_ecs
 students_staging_ecs_user=students_staging_ecs
 students_staging_ecs_password=students_staging_ecs
-students_staging_eks=jdbc:mysql://database-2.cmyyngkp9f7o.eu-north-1.rds.amazonaws.com:3306/students_stage_eks
+students_staging_eks=jdbc:mysql://students.cyorux28d2cj.eu-central-1.rds.amazonaws.com:3306/students_stage_eks
 students_staging_eks_user=students_staging_eks
 students_staging_eks_password=students_staging_eks
 ```
