@@ -579,8 +579,8 @@ ci-settings.xml
 .gitlab-ci.yml
 ```
 variables:
-  DOCKER_REGISTRY: [ecr url - no /]
-  AWS_DEFAULT_REGION: eu-north-1
+  DOCKER_REGISTRY: 134867408165.dkr.ecr.eu-central-1.amazonaws.com
+  AWS_DEFAULT_REGION: eu-central-1
   APP_NAME: students-ecs
   DOCKER_HOST: tcp://docker:2375
 
