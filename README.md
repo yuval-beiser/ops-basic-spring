@@ -626,17 +626,17 @@ publish:
 ### ECS
 create taskdefinition ->  ecs-task-definition <br>
 containername ->student-ecs-container<br>
-imageuri-> copy from ecr table<br>
+imageuri-> copy from ecr table<br> - 134867408165.dkr.ecr.eu-central-1.amazonaws.com/students-ecs:latest
 container port-> 8080 <br>
 cpu - 1, memory- 4 <br>
 configure healthcheck:  CMD-SHELL, curl -f http://localhost:8080/actuator/health <br>
 
 
 create cluster: ecs-stage-cluster <br>
+CloudFormation - to delete / update all the stack together 
 create a service: <br>
 fargate-> service-> family=ecs-task-definition->servicename = ecs-stage-service <br>
-
-
+inside the service create : 
 load balancing -> create applicaiton load balancer -> springboot-lb -> port 8080 <br>
 create a target group->  students-ecs-tg-> healthcheck:  /actuator/health -> grace 120 sec <br>
 
@@ -658,7 +658,7 @@ deploy:
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set region $AWS_DEFAULT_REGION
-    - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $DOCKER_REGISTRY
+    - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $DOCKER_REGISTRY
   stage: deploy
   script:
     - echo $REPOSITORY_URL:$IMAGE_TAG 
